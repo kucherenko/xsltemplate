@@ -8,7 +8,7 @@
 namespace XSLTemplate\XML;
 
 /**
- *
+ * Class for collect data in xml format
  */
 class Writer extends \XMLWriter
 {
@@ -96,19 +96,6 @@ class Writer extends \XMLWriter
         } else {
             $this->writeElement($name, $value);
         }
-        //        if ($value instanceof Iterator || is_array($value) || $value instanceof IteratorAggregate) {
-        //            $this->startElementNs($prefix, $name, $uri);
-        //            if (!is_null($attributes)) {
-        //                $this->writeAttribute('attr', $attributes);
-        //            } elseif (isset($value['__attributes'])) {
-        //                $this->writeAttribute('attr', $value['__attributes']);
-        //                unset($value['__attributes']);
-        //            }
-        //            $this->_createXml($value);
-        //            $this->endElement();
-        //        } else {
-        //            parent::writeElementNs($prefix, $name, $uri, $value);
-        //        }
     }
 
     /**
@@ -123,15 +110,28 @@ class Writer extends \XMLWriter
 
         foreach ($array as $key => $value) {
             if (!is_string($key[0])) {
-                $this->writeElement($this->getDefaultNodeName(), $value);
+                $nodeName = $this->getDefaultNodeName();
             } else {
-                $this->writeElement($key, $value);
+                $nodeName = $key;
             }
+            $this->startElement($nodeName);
+            try {
+                $this->arrayToXml($value);
+            } catch (InvalidArgumentException $e) {
+                $this->text($value);
+            }
+            $this->endElement();
         }
-
-
     }
 
+    /**
+     * Return xml as string
+     */
+    public function __toString() {
+        if ($this->hasIncludedXml()) {
+
+        }
+    }
 
     /**
      * return true if already included some xml via xi:include
