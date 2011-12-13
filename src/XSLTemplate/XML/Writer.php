@@ -89,7 +89,6 @@ class Writer extends \XMLWriter
      */
     public function assign($name, $value = null)
     {
-
         if (is_array($value) || $value instanceof \Traversable) {
             $this->startElement($name);
             $this->arrayToXml($value);
@@ -101,6 +100,7 @@ class Writer extends \XMLWriter
 
     /**
      * Convert array to xml.
+     *
      * @param array $array
      */
     public function arrayToXml($array)
@@ -166,6 +166,7 @@ class Writer extends \XMLWriter
 
     /**
      * Get default node name
+     *
      * @return string
      */
     public function getDefaultNodeName()

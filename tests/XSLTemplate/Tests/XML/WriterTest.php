@@ -6,7 +6,6 @@
  * @date 30.11.11
  */
 namespace XSLTemplate\Tests\XML;
-require_once __DIR__ . '/../../../../src/XSLTemplate/XML/Writer.php';
 
 class WriterTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,6 +14,9 @@ class WriterTest extends \PHPUnit_Framework_TestCase
      */
     public function testInit()
     {
+        /**
+         * @var XSLTemplate\XML\Writer
+         */
         $writer = $this->getMock('XSLTemplate\XML\Writer', array('openMemory', 'startDocument'));
         $writer->expects($this->once())
             ->method('openMemory');
@@ -32,11 +34,8 @@ class WriterTest extends \PHPUnit_Framework_TestCase
     public function testIncludeXml()
     {
         $writer = $this->getMock('XSLTemplate\XML\Writer', array('startElementNs', 'writeElement', 'writeAttribute', 'endElement'));
-
         $this->assertFalse($writer->hasIncludedXml());
-
         $writer->includeXml('test');
-
         $this->assertTrue($writer->hasIncludedXml());
     }
 
