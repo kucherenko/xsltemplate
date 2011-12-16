@@ -18,9 +18,11 @@ $xmlWriter->startElement('page');
 $xmlWriter->startElement('content');
 //added extensions to content
 $xmlWriter->assign('extensions', get_loaded_extensions());
-print '<pre>';
-var_dump(get_browser($_SERVER['HTTP_USER_AGENT'], true));
-//$xmlWriter->assign('browser', get_browser($_SERVER['HTTP_USER_AGENT'], true));
+
+$browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
+unset($browser['browser_name_regex']);
+
+$xmlWriter->assign('browser', get_browser($_SERVER['HTTP_USER_AGENT'], true));
 
 $xmlWriter->endElement();
 $xmlWriter->endElement();
