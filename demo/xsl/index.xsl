@@ -12,6 +12,8 @@
     <xsl:template match="content">
         <h1>Demo XSLTemplate</h1>
         <p>
+            Browser:
+            <xsl:value-of select="browser/name"/><xsl:text> </xsl:text><xsl:value-of select="browser/version"/>
             Version:
             <xsl:value-of select="system-property('xsl:version')"/>
             <br/>
