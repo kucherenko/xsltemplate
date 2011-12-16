@@ -18,6 +18,7 @@ $xmlWriter->startElement('page');
 $xmlWriter->startElement('content');
 //added extensions to content
 $xmlWriter->assign('extensions', get_loaded_extensions());
+$xmlWriter->assign('browser', get_browser($_SERVER['HTTP_USER_AGENT'], true));
 
 $xmlWriter->endElement();
 $xmlWriter->endElement();
@@ -35,5 +36,5 @@ $result .= '<!--';
 $result .= (microtime(true) - $startTime);
 $result .= '-->';
 
-header ( "Content-type: application/xml" );
+header ( "Content-type: " . $renderer->getContentType() );
 echo $result;

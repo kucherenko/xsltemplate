@@ -50,6 +50,12 @@ class Renderer {
     private $_currentRenderer = false;
 
     /**
+     * Array of parameters for current render process
+     * @var array
+     */
+    private $_currentParameters = array();
+
+    /**
      * Array of parameters for rendering
      *
      * @var array
@@ -100,7 +106,7 @@ class Renderer {
      * @return string
      */
     public function render($template, \XSLTemplate\XML\Writer $xmlWriter, array $parameters = array()) {
-        $currentParameters = array_merge($this->getParameters(), $parameters);
+        $this->_currentParameters = $currentParameters = array_merge($this->getParameters(), $parameters);
 
         if (empty($currentParameters['render.types'])) {
             throw new \DomainException('render.types is not defined in renderer parameters');
@@ -244,4 +250,18 @@ class Renderer {
     public function getCurrentRenderer() {
         return $this->_currentRenderer;
     }
+
+    /**
+     * Return content type for header function
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        if ($this->getCurrentRenderer() == Renderer::RENDER_XML || $this->getCurrentRenderer() == Renderer::RENDER_BROWSER) {
+            return 'application/xml';
+        }
+        return 'text/html';
+    }
+
 }
