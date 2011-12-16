@@ -35,4 +35,5 @@ $result .= '<!--';
 $result .= (microtime(true) - $startTime);
 $result .= '-->';
 
+header ( "Content-type: application/xml" );
 echo $result;
