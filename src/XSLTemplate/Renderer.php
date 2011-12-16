@@ -110,7 +110,7 @@ class Renderer {
             return $this->renderXml($xmlWriter, $parameters);
         }
 
-        $userAgent = $currentParameters['userAgent'] ? $currentParameters['userAgent'] : $_SERVER['HTTP_USER_AGENT'];
+        $userAgent = isset($currentParameters['userAgent']) ? $currentParameters['userAgent'] : $_SERVER['HTTP_USER_AGENT'];
         if (in_array(Renderer::RENDER_BROWSER, $currentParameters['render.types']) && $this->isBrowserSupport($userAgent, $currentParameters['render.browsers'])) {
             if (!isset($currentParameters['templates.url'])) {
                 throw new \DomainException('templates.url is not defined in renderer parameters, need for render on browser side');
