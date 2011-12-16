@@ -72,6 +72,7 @@ class Renderer {
             'IE'       => 7.0,
             'Safari'   => 3.0,
             'Chromium' => 10.0,
+            'Android'  => 2.2,
         ),
         // path to templates, using for render on browser side
         'templates.url'   => '/',
