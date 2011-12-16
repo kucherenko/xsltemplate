@@ -20,9 +20,11 @@ class XslCache implements RendererInterface
         $xslt->importStyleSheet($templatePath);
         $outputDom = $xslt->transformToDoc($source);
 
-        if ($parameters['output.xml']) {
-            return $outputDom->saveXML();
+        if ($parameters['output.type'] && $parameters['output.type'] == 'xml') {
+            $result = $outputDom->saveXML();
+        } else {
+            $result = $outputDom->saveHTML();
         }
-        return $outputDom->saveHTML();
+        return $result;
     }
 }

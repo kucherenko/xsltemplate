@@ -21,7 +21,7 @@ class LibXslt implements RendererInterface
         $processor->importStylesheet($xsl);
         $outputDom = $processor->transformToDoc($source);
 
-        if ($parameters['output.xml']) {
+        if ($parameters['output.type'] && $parameters['output.type'] == 'xml') {
             $result = $outputDom->saveXML();
         } else {
             $result = $outputDom->saveHTML();
