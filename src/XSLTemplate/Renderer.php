@@ -62,7 +62,7 @@ class Renderer {
      */
     private $_parameters = array(
         //type of renders
-        'render.types'    => array(Renderer::RENDER_BROWSER, Renderer::RENDER_XSL_CACHE, Renderer::RENDER_LIB_XSLT, Renderer::RENDER_XML),
+        'render.types'    => array(Renderer::RENDER_BROWSER, Renderer::RENDER_LIB_XSLT, Renderer::RENDER_XML),
         // supported browsers
         'render.browsers' => array(//name => version
             'Opera'    => 9.0,
