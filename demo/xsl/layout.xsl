@@ -10,7 +10,7 @@
 
     <xsl:template match="page">
         <xsl:param name="title"/>
-        <html xmlns="http://www.w3.org/1999/xhtml">
+        <html>
             <head>
                 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
                 <title><xsl:value-of select="$title"/></title>
