@@ -31,6 +31,8 @@ $renderer->addParameters(
 );
 $result = $renderer->render('index.xsl', $xmlWriter);
 
+$result .= '<!--';
 $result .= (microtime(true) - $startTime);
+$result .= '-->';
 
 echo $result;
