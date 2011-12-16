@@ -20,9 +20,7 @@ $xmlWriter->startElement('content');
 $xmlWriter->assign('extensions', get_loaded_extensions());
 
 $browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
-unset($browser['browser_name_regex']);
-
-$xmlWriter->assign('browser', get_browser($_SERVER['HTTP_USER_AGENT'], true));
+$xmlWriter->assign('browser', array('name' => $browser['browser'], 'version' => $browser['version']));
 
 $xmlWriter->endElement();
 $xmlWriter->endElement();
