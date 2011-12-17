@@ -64,7 +64,8 @@ class Renderer {
         //type of renders
         'render.types'    => array(Renderer::RENDER_BROWSER, Renderer::RENDER_LIB_XSLT, Renderer::RENDER_XML),
         // supported browsers
-        'render.browsers' => array(//name => version
+        'render.browsers' => array(
+            //name => version
             'Opera'    => 9.0,
             'Firefox'  => 3.0,
             'Safari'   => 3.0,
@@ -72,10 +73,10 @@ class Renderer {
             'IE'       => 7.0,
             'Safari'   => 3.0,
             'Chromium' => 10.0,
-            'Android'  => 2.2,
         ),
         // path to templates, using for render on browser side
         'templates.url'   => '/',
+        //output type, using at libxslt and xslcahce renderers
         'output.type' => 'html'
     );
 

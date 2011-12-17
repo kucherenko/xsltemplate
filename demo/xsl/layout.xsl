@@ -13,10 +13,47 @@
         <html>
             <head>
                 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-                <title><xsl:value-of select="$title"/></title>
+                <title>
+                    <xsl:value-of select="$title"/>
+                </title>
+                <link rel="stylesheet" href="css/main.css" type="text/css"/>
             </head>
             <body>
-                <xsl:apply-templates select="content"/>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+                        <title><xsl:value-of select="$title"/></title>
+                    </head>
+                    <body>
+                        <div id="head">
+                            <h1>XSLTemplate demos</h1>
+                        </div>
+                        <div id="menu">
+                            <div>
+                                <a href="index.php">Home</a>
+                            </div>
+                            <div>
+                                <a href="2.html">Байки по автору</a>
+                            </div>
+                            <div>
+                                <a href="3.html">Байки по теме</a>
+                            </div>
+                            <div class="line"></div>
+                            <div>
+                                <a href="4.html">Популярные разделы</a>
+                            </div>
+                            <div>
+                                <a href="text.html">Последние байки</a>
+                            </div>
+                        </div>
+                        <div id="content">
+
+                        </div>
+                        <div id="foot">
+                            Copyright &amp;copy; XSLTemplate
+                        </div>
+                    </body>
+                </html>
             </body>
         </html>
     </xsl:template>
