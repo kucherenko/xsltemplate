@@ -1,3 +1,9 @@
+<!DOCTYPE xsl:stylesheet [
+        <!ENTITY copy "&#169;">
+        <!ENTITY nbsp "&#160;">
+        <!ENTITY laquo "&#171;">
+        <!ENTITY raquo "&#187;">
+        ]>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <xsl:output
@@ -22,7 +28,9 @@
                 <html xmlns="http://www.w3.org/1999/xhtml">
                     <head>
                         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-                        <title><xsl:value-of select="$title"/></title>
+                        <title>
+                            <xsl:value-of select="$title"/>
+                        </title>
                     </head>
                     <body>
                         <div id="head">
@@ -33,24 +41,43 @@
                                 <a href="index.php">Home</a>
                             </div>
                             <div>
-                                <a href="2.html">Байки по автору</a>
+                                <a href="demo1.php">Demo 1</a>
                             </div>
                             <div>
-                                <a href="3.html">Байки по теме</a>
+                                <a href="demo2.php">Demo 2</a>
                             </div>
                             <div class="line"></div>
                             <div>
-                                <a href="4.html">Популярные разделы</a>
-                            </div>
-                            <div>
-                                <a href="text.html">Последние байки</a>
+                                <h4>XSL Info:</h4>
+                                <p>
+                                    Version:
+                                    <xsl:value-of select="system-property('xsl:version')"/>
+                                    <br/>
+                                    Vendor:
+                                    <xsl:value-of select="system-property('xsl:vendor')"/>
+                                    <br/>
+                                    Vendor URL:
+                                    <xsl:value-of select="system-property('xsl:vendor-url')"/>
+                                </p>
+                                <xsl:if test="content/browser">
+                                <h4>Browser Info:</h4>
+                                <p>
+                                    Name:
+                                    <xsl:value-of select="content/browser/name"/>
+                                    <br/>
+                                    Version:
+                                    <xsl:value-of select="content/browser/version"/>
+                                    <br/>
+                                </p>
+                                </xsl:if>
                             </div>
                         </div>
                         <div id="content">
-
+                            <h2><xsl:value-of select="$title"/></h2>
+                            <xsl:apply-templates select="content"/>
                         </div>
                         <div id="foot">
-                            Copyright &amp;copy; XSLTemplate
+                            Copyright &copy; XSLTemplate
                         </div>
                     </body>
                 </html>
