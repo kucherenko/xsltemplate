@@ -40,8 +40,7 @@ h2 {
 }
 
 #menu a:hover {
-    background: #b9faa7;
-    margin: 0;
+    background: #cfc5af;
 }
 
 #content {
@@ -51,7 +50,7 @@ h2 {
 }
 
 .line {
-    border-bottom: 1px groove #333;
+    border-bottom: 1px groove #cfc5af;
 }
 
 #foot {
@@ -59,4 +58,7 @@ h2 {
     padding: 5px;
     color: #fff;
     clear: both;
+}
+.gray {
+    background: #cfcfcf;
 }

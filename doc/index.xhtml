@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>XSLTemplate documentation</title>
+</head>
+<body>
+<div id="content">
+
+    <h1>XSLTemplate documentation</h1>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#engines">Supported engines</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#start">Getting start</a></li>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#browser">Browser side render</a></li>
+    </ul>
+    <a name="about"/>
+
+    <h3>About</h3>
+
+    <p>XSLTemplate is a PHP 5.3 library for processing xsl templates in web projects.</p>
+
+    <a name="engines"/>
+
+    <h3>Supported engines</h3>
+
+    <p>XSLTemplate support follow render engines:</p>
+    <ul>
+        <li>LibXslt (<a href="http://xmlsoft.org/XSLT/" target="_blank">http://xmlsoft.org/XSLT/</a>), embedded in php5
+            extension;
+        </li>
+        <li>Browsers embedded xslt engines, supported browsers (more info <a
+                href="http://www.w3schools.com/xsl/xsl_browsers.asp" target="_blank">http://www.w3schools.com/xsl/xsl_browsers.asp</a>
+            ):
+            <ul>
+                <li>
+                    Firefox (<a href="http://www.mozilla.org/projects/xslt/" target="_blank">http://www.mozilla.org/projects/xslt/</a>);
+                </li>
+                <li>
+                    Chromium version >= 10.0 (used embedded LibXslt <a href="http://xmlsoft.org/XSLT/" target="_blank">http://xmlsoft.org/XSLT/</a>);
+                </li>
+                <li>
+                    Chrome version >= 1.0 (used embedded LibXslt <a href="http://xmlsoft.org/XSLT/" target="_blank">http://xmlsoft.org/XSLT/</a>);
+                </li>
+                <li>Opera version >= 9.0 (<a href="http://www.opera.com/">http://www.opera.com/</a>);</li>
+                <li>IE version >= 7.0;</li>
+                <li>Safari version >= 7.0;</li>
+            </ul>
+        </li>
+        <li>XslCache (<a href="http://code.nytimes.com/projects/xslcache" target="_blank">http://code.nytimes.com/projects/xslcache</a>),
+            extension is a modification of PHP's standard XSL extension;
+        </li>
+    </ul>
+    <a name="install"/>
+
+    <h3>Installation</h3>
+    <ol>
+        <li>
+            Install libxslt for php
+            <pre>apt-get install php5-xsl</pre>
+        </li>
+        <li>
+            Set up <a href="http://php.net/manual/en/misc.configuration.php#ini.browscap" target="_blank">browscap</a>
+            option to php.ini, <br/>
+            browscap.ini is not bundled with PHP, but you may find an up-to-date <a
+                href="http://browsers.garykeith.com/downloads.asp">php_browscap.ini</a> file here.
+        </li>
+        <li>
+            Install xslcache [optional](<a href="http://code.nytimes.com/projects/xslcache/wiki" target="_blank">http://code.nytimes.com/projects/xslcache/wiki</a>).
+        </li>
+        <li>Install Git</li>
+        <li>Git:
+            <pre>
+            git clone git://github.com/kucherenko/xsltemplate.git
+            git submodule init
+            git submodule update
+            </pre>
+        </li>
+    </ol>
+    <a name="start"/>
+
+    <h3>Getting started</h3>
+
+    <p>This section gives you a documentation to the PHP API for XSLTemplate.</p>
+
+    <p>Register autoloader:</p>
+    <pre>
+        &lt;?php
+        if (false === class_exists('Symfony\Component\ClassLoader\UniversalClassLoader', false)) {
+            require_once '/path/to/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+        }
+
+        use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+        $loader = new UniversalClassLoader();
+        $loader->registerNamespaces(array(
+            'XSLTemplate'   => '/path/to/xsltemplate/src',
+        ));
+        $loader->register();
+    </pre>
+    <p>Basic usage:</p>
+    <pre>
+        //Create and initialize xml writer
+        $xmlWriter = new \XSLTemplate\XML\Writer();
+        $xmlWriter->init();
+
+        // accumulate data to xml
+        $xmlWriter->startElement('page');
+        $xmlWriter->endElement();
+
+        //create renderer object
+        $renderer = new \XSLTemplate\Renderer();
+
+        echo $renderer->render('index.xsl', $xmlWriter);
+    </pre>
+    <a name="parameters"/>
+
+    <h3>Parameters</h3>
+
+    <p>The following sections describe the configuration parameters available on a Renderer instance.</p>
+
+    <p>For work with parameters use follow code:</p>
+    <pre>
+        //create renderer object
+        $renderer = new \XSLTemplate\Renderer();
+
+        //Add parameters to renderer, merge with default parameters
+        $renderer->addParameters(array(
+            'parameter.name' => 'parameter value',
+        ));
+
+        // Set new parameters to renderer, remove default parameters
+        $renderer->setParameters(array(
+            'parameter.name' => 'parameter value',
+        ));
+
+        //return default parameters
+        $parameters = $renderer->getParameters();
+
+        // last method parameter is a array of parameters for current render process
+        $renderer->render('template_name.xsl', $xmlWriter, $parameters);
+
+        //Return parameters of last render process
+        $currentParameters = $renderer->getCurrentRenderer();
+
+    </pre>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>
+                Option name
+            </th>
+            <th>
+                Default value
+            </th>
+            <th>
+                Required
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <strong>render.types</strong>
+            </td>
+            <td>
+                array(Renderer::RENDER_BROWSER, Renderer::RENDER_LIB_XSLT, Renderer::RENDER_XML)
+            </td>
+            <td><strong>true</strong></td>
+            <td>
+                Types of render, you can use following values for this:
+                <pre>
+                    // supports render in browser
+                    Renderer::RENDER_BROWSER
+                    // render with libxslt on server
+                    Renderer::RENDER_LIB_XSLT
+                    // render with xslcache extension
+                    Renderer::RENDER_XSL_CACHE
+                    // don't use xslt transformation, output only xml
+                    Renderer::RENDER_XML
+                </pre>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>templates.path</strong>
+            </td>
+            <td>
+                none
+            </td>
+            <td><strong>true</strong> (if use Renderer::RENDER_LIB_XSLT or Renderer::RENDER_XSL_CACHE renderer)</td>
+            <td>
+                Path on server to xsl templates
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>templates.url</strong>
+            </td>
+            <td>
+                /
+            </td>
+            <td><strong>true</strong> (if use Renderer::RENDER_BROWSER renderer)</td>
+            <td>
+                HTTP url to xsl templates, must be at same domain with php code
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>render.browsers</strong>
+            </td>
+            <td>
+                <pre>
+                    array(
+                        //name => version
+                        'Opera'    => 9.0,
+                        'Firefox'  => 3.0,
+                        'Safari'   => 3.0,
+                        'Chrome'   => 1.0,
+                        'IE'       => 7.0,
+                        'Safari'   => 3.0,
+                        'Chromium' => 10.0,
+                    )
+                </pre>
+            </td>
+            <td><strong>true</strong> (if use Renderer::RENDER_BROWSER renderer)</td>
+            <td>
+                List of browser with xslt support
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>only.xml</strong>
+            </td>
+            <td>
+                false
+            </td>
+            <td><strong>false</strong></td>
+            <td>
+                if this parameter is true, renderer will use only RENDER_XML
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>output.type</strong>
+            </td>
+            <td>
+                html
+            </td>
+            <td><strong>false</strong></td>
+            <td>
+                output type, using at libxslt and xslcahce renderers, <br/>
+                can use 'html' and 'xml' types, if output.type == 'xml' transformation result will output with DOMDocument::saveXML(),
+                otherwise will output with DOMDocument::saveHTML()
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a name="browser"/>
+    <h3>Browser side</h3>
+    <p>Coming soon</p>
+</div>
+</body>
+</html>

@@ -77,7 +77,9 @@ class Renderer {
         // path to templates, using for render on browser side
         'templates.url'   => '/',
         //output type, using at libxslt and xslcahce renderers
-        'output.type' => 'html'
+        'output.type' => 'html',
+        //if this parameter is true, renderer will use only RENDER_XML
+        'only.xml' => false,
     );
 
     /**
