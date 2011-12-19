@@ -6,7 +6,7 @@
 
     <xsl:include href="layout.xsl"/>
 
-    <xsl:variable name="docs" select="document('../../docs/index.xhtml')/html/body/div[@id='content']" />
+    <xsl:variable name="docs" select="document('../../doc/index.xhtml')/html/body/div[@id='content']" />
 
     <xsl:template match="/">
         <xsl:apply-templates select="page">
