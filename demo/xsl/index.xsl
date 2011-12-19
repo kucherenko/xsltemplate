@@ -16,6 +16,7 @@
     </xsl:template>
 
     <xsl:template match="content">
+        <xsl:copy-of select="$docs/*|$docs/text()"/>
         <h3>PHP extensions list</h3>
         <xsl:apply-templates select="extensions"/>
     </xsl:template>
