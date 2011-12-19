@@ -6,6 +6,8 @@
 
     <xsl:include href="layout.xsl"/>
 
+    <xsl:variable name="docs" select="document('../../docs/index.xhtml')/html/body/div[@id='content']" />
+
     <xsl:template match="/">
         <xsl:apply-templates select="page">
             <xsl:with-param name="title">Demo page for XSLTemplate</xsl:with-param>
