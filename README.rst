@@ -19,3 +19,4 @@ XSLTemplate support follow render engines:
  - XslCache (http://code.nytimes.com/projects/xslcache), extension is a modification of PHP's standard XSL extension;
 
 
+More `documentation <https://github.com/kucherenko/xsltemplate/blob/master/doc/index.rst>`_

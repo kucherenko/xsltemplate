@@ -48,32 +48,139 @@ This section gives you a documentation to the PHP API for XSLTemplate.
 Register autoloader:
 ::
 
-        <?php
-        if (false === class_exists('Symfony\Component\ClassLoader\UniversalClassLoader', false))      {
-            require_once '/path/to/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-        }
+    <?php
+    if (false === class_exists('Symfony\Component\ClassLoader\UniversalClassLoader', false)){
+        require_once '/path/to/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    }
 
-        use Symfony\Component\ClassLoader\UniversalClassLoader;
+    use Symfony\Component\ClassLoader\UniversalClassLoader;
 
-        $loader = new UniversalClassLoader();
-        $loader->registerNamespaces(array(
-            'XSLTemplate'   => '/path/to/xsltemplate/src',
-        ));
-        $loader->register();
+    $loader = new UniversalClassLoader();
+    $loader->registerNamespaces(array(
+        'XSLTemplate'   => '/path/to/xsltemplate/src',
+    ));
+    $loader->register();
 
 Basic usage:
 ::
         
-        //Create and initialize xml writer
-        $xmlWriter = new \XSLTemplate\XML\Writer();
-        $xmlWriter->init();
+    //Create and initialize xml writer
+    $xmlWriter = new \XSLTemplate\XML\Writer();
+    $xmlWriter->init();
 
-        // accumulate data to xml
-        $xmlWriter->startElement('page');
-        $xmlWriter->endElement();
+    // accumulate data to xml
+    $xmlWriter->startElement('page');
+    $xmlWriter->endElement();
 
-        //create renderer object
-        $renderer = new \XSLTemplate\Renderer();
+    //create renderer object
+    $renderer = new \XSLTemplate\Renderer();
 
-        echo $renderer->render('index.xsl', $xmlWriter);
+    echo $renderer->render('index.xsl', $xmlWriter);
+
+Parameters
+----------
+
+The following sections describe the configuration parameters available on a Renderer instance.
+
+For work with parameters use follow code:
+::
+
+    //create renderer object
+    $renderer = new \XSLTemplate\Renderer();
+
+    //Add parameters to renderer, merge with default parameters
+    $renderer->addParameters(array(
+        'parameter.name' => 'parameter value',
+    ));
+
+    // Set new parameters to renderer, remove default parameters
+    $renderer->setParameters(array(
+        'parameter.name' => 'parameter value',
+    ));
+
+    //return default parameters
+    $parameters = $renderer->getParameters();
+
+    // last method parameter is a array of parameters for current render process
+    $renderer->render('template_name.xsl', $xmlWriter, $parameters);
+
+    //Return parameters of last render process
+    $currentParameters = $renderer->getCurrentRenderer();
+
+
+Parameters list:
+________________
+
+render.types
+^^^^^^^^^^^^
+Types of render you can use following values for this
+(required parameter):
+::
+
+    // supports render in browser
+    Renderer::RENDER_BROWSER
+    // render with libxslt on server
+    Renderer::RENDER_LIB_XSLT
+    // render with xslcache extension
+    Renderer::RENDER_XSL_CACHE
+    // don't use xslt transformation, output only xml
+    Renderer::RENDER_XML
+
+Default value:
+::
+
+  array(
+     Renderer::RENDER_BROWSER,
+     Renderer::RENDER_LIB_XSLT,
+     Renderer::RENDER_XML
+  )
+
+templates.path 
+^^^^^^^^^^^^^^
+Path on server to xsl templates.
+Required if use ``Renderer::RENDER_LIB_XSLT`` or ``Renderer::RENDER_XSL_CACHE`` 
+renderer.
+
+Default value: not defined
+
+templates.url 
+^^^^^^^^^^^^^
+HTTP url to xsl templates, must be at same domain with php code.
+Required if use Renderer::RENDER_BROWSER renderer.
+
+Default value: /
+
+render.browsers
+^^^^^^^^^^^^^^^
+
+List of browser with xslt support (Required if use Renderer::RENDER_BROWSER renderer).
+
+Default value:
+::
+
+    array(
+        //name => version
+        'Opera'    => 9.0,
+        'Firefox'  => 3.0,
+        'Safari'   => 3.0,
+        'Chrome'   => 1.0,
+        'IE'       => 7.0,
+        'Safari'   => 3.0,
+        'Chromium' => 10.0,
+    )
+
+only.xml
+^^^^^^^^
+If this parameter is true, renderer will use only RENDER_XML (Not required parameter).
+
+Default value: false
+
+output.type
+^^^^^^^^^^^
+Output type, using at ``Renderer::RENDER_LIB_XSLT`` and ``Renderer::RENDER_XSL_CACHE``, can use 'html' and 'xml' types,
+if output.type == 'xml' transformation result will output with ``DOMDocument::saveXML()``,
+otherwise will output with ``DOMDocument::saveHTML()``.
+
+Default value: html
+
 
