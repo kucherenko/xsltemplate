@@ -179,7 +179,7 @@ output.type
 ^^^^^^^^^^^
 Output type, using at ``Renderer::RENDER_LIB_XSLT`` and ``Renderer::RENDER_XSL_CACHE``, can use 'html' and 'xml' types,
 if output.type == 'xml' transformation result will output with ``DOMDocument::saveXML()``,
-otherwise will output with ``DOMDocument::saveHTML()``.
+otherwise will output with ``DOMDocument::saveHTML()``. (Not required)
 
 Default value: html
 
