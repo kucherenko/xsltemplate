@@ -25,7 +25,55 @@ XSLTemplate support follow render engines:
 Installation
 ------------
 
-1. Install libxslt for php
-   ``apt-get install php5-xsl``
-2. Set up `browscap<http://php.net/manual/en/misc.configuration.php#ini.browscap>` _
-   option to php.ini, browscap.ini is not bundled with PHP, but you may find an up-to-date `php_browscap.ini <http://browsers.garykeith.com/downloads.asp>` _ file here.
+1. Install libxslt for php:
+   ::
+       
+     apt-get install php5-xsl
+2. Set up `browscap <http://php.net/manual/en/misc.configuration.php#ini.browscap>`_
+   option to php.ini, browscap.ini is not bundled with PHP, but you may find an up-to-date `php_browscap.ini <http://browsers.garykeith.com/downloads.asp>`_ file here;
+3. Install xslcache [optional] (http://code.nytimes.com/projects/xslcache/wiki).
+4. Install Git
+5. Git source:
+   ::
+     
+     git clone git://github.com/kucherenko/xsltemplate.git
+     git submodule init
+     git submodule update
+
+Getting started
+---------------
+
+This section gives you a documentation to the PHP API for XSLTemplate.
+
+Register autoloader:
+::
+
+        <?php
+        if (false === class_exists('Symfony\Component\ClassLoader\UniversalClassLoader', false))      {
+            require_once '/path/to/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+        }
+
+        use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+        $loader = new UniversalClassLoader();
+        $loader->registerNamespaces(array(
+            'XSLTemplate'   => '/path/to/xsltemplate/src',
+        ));
+        $loader->register();
+
+Basic usage:
+::
+        
+        //Create and initialize xml writer
+        $xmlWriter = new \XSLTemplate\XML\Writer();
+        $xmlWriter->init();
+
+        // accumulate data to xml
+        $xmlWriter->startElement('page');
+        $xmlWriter->endElement();
+
+        //create renderer object
+        $renderer = new \XSLTemplate\Renderer();
+
+        echo $renderer->render('index.xsl', $xmlWriter);
+
