@@ -6,6 +6,9 @@
  */
  namespace XSLTemplate\XML;
 
+/**
+ *
+ */
 interface XMLConvertible {
     public function toXML(Writer $writer);
 }
