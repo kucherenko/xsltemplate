@@ -12,6 +12,7 @@ $startTime = microtime(true);
 $xmlWriter = new \XSLTemplate\XML\Writer();
 $xmlWriter->init();
 
+
 //start main document node
 $xmlWriter->startElement('page');
 //start content node
