@@ -91,7 +91,7 @@ class Writer extends \XMLWriter
     {
         if ($value instanceof XMLConvertible){
             $this->startElement($name);
-            $value->convertObjectToXML($value);
+            $this->convertObjectToXML($value);
             $this->endElement();
         } elseif (is_array($value) || $value instanceof \Traversable) {
             $this->startElement($name);
@@ -124,7 +124,11 @@ class Writer extends \XMLWriter
         }
 
         foreach ($array as $key => $value) {
-            if (!is_string($key[0])) {
+            if ($value instanceof XMLConvertible) {
+                $this->convertObjectToXML($value);
+                continue;
+            }
+            if (is_numeric($key[0])) {
                 $nodeName = $this->getDefaultNodeName();
             } else {
                 $nodeName = $key;
