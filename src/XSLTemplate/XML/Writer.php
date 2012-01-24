@@ -89,13 +89,27 @@ class Writer extends \XMLWriter
      */
     public function assign($name, $value = null)
     {
-        if (is_array($value) || $value instanceof \Traversable) {
+        if ($value instanceof XMLConvertible){
+            $this->startElement($name);
+            $this->convertObjectToXML($value);
+            $this->endElement();
+        } elseif (is_array($value) || $value instanceof \Traversable) {
             $this->startElement($name);
             $this->arrayToXml($value);
             $this->endElement();
         } else {
             $this->writeElement($name, $value);
         }
+    }
+
+    /**
+     * Convert any XMLConvertible $object to xml string.
+     *
+     * @param XMLConvertible $object
+     */
+    public function convertObjectToXML(XMLConvertible $object)
+    {
+        $object->toXML($this);
     }
 
     /**
@@ -110,7 +124,11 @@ class Writer extends \XMLWriter
         }
 
         foreach ($array as $key => $value) {
-            if (!is_string($key[0])) {
+            if ($value instanceof XMLConvertible) {
+                $this->convertObjectToXML($value);
+                continue;
+            }
+            if (is_numeric($key[0])) {
                 $nodeName = $this->getDefaultNodeName();
             } else {
                 $nodeName = $key;
