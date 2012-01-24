@@ -116,6 +116,9 @@ class Renderer {
             throw new \DomainException('render.types is not defined in renderer parameters');
         }
 
+        //close all opened nodes in xml document
+        $xmlWriter->endDocument();
+
         if (in_array(Renderer::RENDER_XML, $currentParameters['render.types']) && isset($currentParameters['only.xml']) && $currentParameters['only.xml'] == true) {
             return $this->renderXml($xmlWriter, $parameters);
         }
