@@ -1,0 +1,21 @@
+{
+    "name": "xsltemplate",
+    "type": "library",
+    "description": "XSLTemplate is a PHP 5.3 library for processing xsl templates in web projects.",
+    "keywords": [],
+    "homepage": "https://github.com/kucherenko/xsltemplate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey Kucherenko",
+            "email": "andrey@kucherenko.org",
+            "homepage": "http://kucherenko.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "XSLTemplate": "src/" }
+    }
+}

@@ -5,10 +5,12 @@
  * @date   16.12.11
  *
  */
-require_once '../autoload.php';
+require_once '../vendor/autoload.php';
 
+//start timer
 $startTime = microtime(true);
 
+//make XMLWriter object
 $xmlWriter = new \XSLTemplate\XML\Writer();
 $xmlWriter->init();
 
@@ -17,27 +19,28 @@ $xmlWriter->init();
 $xmlWriter->startElement('page');
 //start content node
 $xmlWriter->startElement('content');
-//added extensions to content
-$xmlWriter->assign('extensions', get_loaded_extensions());
 
-$browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
-$xmlWriter->assign('browser', array('name' => $browser['browser'], 'version' => $browser['version']));
-
+$xmlWriter->startElement('docs');
+$xmlWriter->includeXML('docs.xml');
+$xmlWriter->endElement();
 $xmlWriter->endElement();
 $xmlWriter->endElement();
 
 $renderer = new \XSLTemplate\Renderer();
-$renderer->addParameters(
-    array(
-        'templates.url' => 'xsl/',
-        'templates.path' => __DIR__ . '/xsl/',
-    )
-);
+$renderer->addParameters(array('templates.url'  => 'xsl/', 'templates.path' => __DIR__ . '/xsl/',));
+
+if (isset($_GET['xml']) && $_GET['xml']==1){
+    $renderer->addParameters(array('only.xml'=>true));
+}
+
 $result = $renderer->render('index.xsl', $xmlWriter);
 
+// echo execute time
 $result .= '<!--';
+$result .= 'Execute time: ';
 $result .= (microtime(true) - $startTime);
+$result .= ', renderer: ' . $renderer->getCurrentRenderer();
 $result .= '-->';
 
-header ( "Content-type: " . $renderer->getContentType() );
+header("Content-type: " . $renderer->getContentType());
 echo $result;
