@@ -35,10 +35,8 @@ Installation
 4. Install Git
 5. Git source:
    ::
-     
+
      git clone git://github.com/kucherenko/xsltemplate.git
-     git submodule init
-     git submodule update
 
 Getting started
 ---------------
