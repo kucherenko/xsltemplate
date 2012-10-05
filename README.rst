@@ -1,6 +1,8 @@
 XSLTemplate
 ===========
 
+[![Build Status](https://secure.travis-ci.org/kucherenko/xsltemplate.png?branch=master)](http://travis-ci.org/kucherenko/xsltemplate)
+
 XSLTemplate is a PHP 5.3 library for processing xsl templates in web projects.
 
 
