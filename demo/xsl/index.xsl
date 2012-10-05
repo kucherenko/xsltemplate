@@ -6,8 +6,6 @@
 
     <xsl:include href="layout.xsl"/>
 
-    <xsl:variable name="docs" select="document('../../doc/index.xhtml')/html/body/div[@id='content']" />
-
     <xsl:template match="/">
         <xsl:apply-templates select="page">
             <xsl:with-param name="title">Demo page for XSLTemplate</xsl:with-param>
@@ -16,8 +14,7 @@
     </xsl:template>
 
     <xsl:template match="content">
-        <xsl:copy-of select="$docs/*|$docs/text()"/>
-        <h3>PHP extensions list</h3>
+    <h3>PHP extensions list</h3>
         <xsl:apply-templates select="extensions"/>
     </xsl:template>
 
