@@ -128,12 +128,15 @@ class Writer extends \XMLWriter
                 $this->convertObjectToXML($value);
                 continue;
             }
-            if (is_numeric($key[0])) {
+            if (!$this->isValidXmlName($key)) {
                 $nodeName = $this->getDefaultNodeName();
             } else {
                 $nodeName = $key;
             }
             $this->startElement($nodeName);
+            if ($key !== $nodeName) {
+                $this->writeAttribute('_original-node-name', $key);
+            }
             try {
                 $this->arrayToXml($value);
             } catch (\InvalidArgumentException $e) {
@@ -190,6 +193,23 @@ class Writer extends \XMLWriter
     public function getDefaultNodeName()
     {
         return $this->_defaultNodeName;
+    }
+
+    /**
+     * Function check is name can be xml nodename.
+     *
+     * @param $name
+     * @return bool
+     */
+    function isValidXmlName($name)
+    {
+        if(stripos($name, 'xml') === 0) return false;
+        try {
+            new \DOMElement($name);
+            return true;
+        } catch(\DOMException $e) {
+            return false;
+        }
     }
 
     /**
